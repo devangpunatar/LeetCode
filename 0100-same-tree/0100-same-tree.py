@@ -7,28 +7,11 @@
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         
-        resultP = []
-        resultQ = []
-        def pre_order_traversal(p, resultP):
-            if p:
-                resultP.append(p.val)
-                pre_order_traversal(p.left, resultP)
-                pre_order_traversal(p.right, resultP)
-            else:
-                resultP.append(None)
-
-        def pre_order_traversal(q, resultQ):
-            if q:
-                resultQ.append(q.val)
-                pre_order_traversal(q.left, resultQ)
-                pre_order_traversal(q.right, resultQ)
-            else:
-                resultQ.append(None)
-                
-        pre_order_traversal(p, resultP)
-        pre_order_traversal(q, resultQ)
-
-        if resultP == resultQ:
+        if not p and not q:
             return True
-        else:
+        if not p or not q:
             return False
+        if p.val != q.val:
+            return False
+
+        return (self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right))
