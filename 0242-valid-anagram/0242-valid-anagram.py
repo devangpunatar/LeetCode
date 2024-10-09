@@ -1,15 +1,21 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        if(len(s) != len(t)):
+        if len(s) != len(t):
             return False
 
-        countS, countT = {}, {} 
+        count = {}
 
-        for i in range(len(s)):
-            countS[s[i]] = 1 + countS.get(s[i], 0)
-            countT[t[i]] = 1 + countT.get(t[i], 0)
+        # Count characters in `s`
+        for char in s:
+            count[char] = count.get(char, 0) + 1
 
-        for c in countS:
-            if countS[c] != countT.get(c, 0):
+        # Decrement counts based on characters in `t`
+        for char in t:
+            if char not in count:
                 return False
+            count[char] -= 1
+            if count[char] < 0:
+                return False
+
+        # If all counts are zero, they are anagrams
         return True
