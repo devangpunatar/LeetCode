@@ -22,3 +22,6 @@ class Solution:
                     heapq.heappush(maxHeap, q.popleft()[0])
                     
         return time
+    
+    
+    
