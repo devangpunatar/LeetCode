@@ -5,13 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         
-        if not p and not q:
-            return True
-        if not p or not q:
-            return False
-        if p.val != q.val:
-            return False
+        if not root:
+            return None
+        
+        root.left, root.right = root.right, root.left
 
-        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
