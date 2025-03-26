@@ -1,3 +1,4 @@
 class Solution:
     def judgeCircle(self, moves: str) -> bool:
-        return moves.count('R') == moves.count('L') and moves.count('U') == moves.count('D')
+        count = Counter(moves)
+        return count['R'] == count['L'] and count['U'] == count['D']
