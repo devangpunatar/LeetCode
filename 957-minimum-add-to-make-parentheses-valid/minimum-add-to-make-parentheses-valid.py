@@ -7,7 +7,7 @@ class Solution:
                 openP += 1
             elif c == ")" and openP >= 1:
                 openP -= 1
-            elif c == ")" and openP == 0:
+            elif c == ")":
                 closeP += 1
 
         return openP + closeP
