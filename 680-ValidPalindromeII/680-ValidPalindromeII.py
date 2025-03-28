@@ -1,6 +1,7 @@
-# Last updated: 3/28/2025, 3:55:24 PM
+# Last updated: 3/28/2025, 3:57:10 PM
 class Solution:
     def validPalindrome(self, s: str) -> bool:
+        
         def check(s, l, r):
             return s[l:r+1] == s[l:r+1][::-1]
 
