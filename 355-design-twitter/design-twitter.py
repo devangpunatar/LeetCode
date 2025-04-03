@@ -10,36 +10,30 @@ class Twitter:
         self.time -= 1
 
     def getNewsFeed(self, userId: int) -> List[int]:
-        # Initialize an empty list to store the result
         res = []
-        # Initialize a min heap to store the most recent tweets from followed users
         minHeap = []
 
-        # Ensure that the user follows themselves
+        # Ensure user follows themselves
         self.followMap[userId].add(userId)
-        
-        # Iterate over users followed by the given userId
-        for followeeId in self.followMap[userId]:
-            # Check if the followee has any tweets
-            if followeeId in self.tweetMap:
-                # Get the index of the most recent tweet from the followee
-                index = len(self.tweetMap[followeeId]) - 1
-                # Retrieve the count and tweetId of the tweet
-                count, tweetId = self.tweetMap[followeeId][index]
-                # Push the tweet onto the min heap along with additional information
-                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])
 
-        # Retrieve the 10 most recent tweets from the min heap
+        # For each followee, push their most recent tweet (if any)
+        for followeeId in self.followMap[userId]:
+            tweets = self.tweetMap[followeeId]
+            if tweets:
+                time, tweetId = tweets[-1]
+                idx = len(tweets) - 1
+                heapq.heappush(minHeap, [time, tweetId, followeeId, idx - 1])
+
+        # Pop most recent tweets, and push next older tweet from same user
         while minHeap and len(res) < 10:
-            count, tweetId, followeeId, index = heapq.heappop(minHeap)
-            # Append the tweetId to the result list
+            time, tweetId, uid, idx = heapq.heappop(minHeap)
             res.append(tweetId)
-            # If the followee has more tweets, push the next tweet onto the min heap
-            if index >= 0:
-                count, tweetId = self.tweetMap[followeeId][index]
-                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])
-        # Return the result list containing the 10 most recent tweets
+            if idx >= 0:
+                time, tweetId = self.tweetMap[uid][idx]
+                heapq.heappush(minHeap, [time, tweetId, uid, idx - 1])
+
         return res
+
     
     def follow(self, followerId: int, followeeId: int) -> None:
         self.followMap[followerId].add(followeeId)
