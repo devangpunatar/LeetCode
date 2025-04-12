@@ -1,24 +1,13 @@
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
+        last_index = {c: i for i, c in enumerate(s)}  # map of last positions
         res = []
-        hashMap = {} # map each char to their first and last index
+        start = end = 0
+
         for i, c in enumerate(s):
-            if c not in hashMap:
-                hashMap[c] = [i, i]
-            else:
-                hashMap[c][1] = i
+            end = max(end, last_index[c])  # extend window
+            if i == end:
+                res.append(end - start + 1)  # found a partition
+                start = i + 1  # move to next window
 
-        res.append(hashMap[s[0]])
-        last_end = hashMap[s[0]][1]
-    
-        for start, end in list(hashMap.values())[1:]:
-            last_end = res[-1][1]
-            if start <= last_end:
-                res[-1][1] = max(end, last_end)
-            else:
-                res.append([start, end])
-        size = []
-        for l, r in res:
-            size.append(r - l + 1)
-
-        return size
+        return res
