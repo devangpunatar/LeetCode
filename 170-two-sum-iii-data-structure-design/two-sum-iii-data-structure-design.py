@@ -1,21 +1,22 @@
 class TwoSum:
 
     def __init__(self):
-        self.nums = []
+        self.nums = {}
 
     def add(self, number: int) -> None:
-        self.nums.append(number)
+        self.nums[number] = 1 + self.nums.get(number, 0)
 
     def find(self, value: int) -> bool:
-        seen = set()
-        for i, n in enumerate(self.nums):
+        for n in self.nums.keys():
             diff = value - n
-            if diff in seen:
+            if n != diff:
+                if diff in self.nums:
+                    return True
+            elif self.nums[n] > 1:
                 return True
-            else:
-                seen.add(n)
         return False
-        
+
+
 # Your TwoSum object will be instantiated and called as such:
 # obj = TwoSum()
 # obj.add(number)
