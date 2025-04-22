@@ -1,21 +1,33 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
+        if n == 0:
+            return 0
         
-        # dp[i][buy][cap] = max profit starting at day i, buy/sell status, and cap remaining
+        # dp[day][buy][cap]
+        # buy: 1 = we can buy, 0 = we must sell next
+        # cap: number of transactions remaining (max 2)
+
         dp = [[[0] * 3 for _ in range(2)] for _ in range(n + 1)]
 
         for i in range(n - 1, -1, -1):
             for buy in [0, 1]:
-                for cap in range(1, 3):  # cap must be at least 1 to make a transaction
+                for cap in range(1, 3):  # cap = 1 or 2
                     if buy:
-                        dp[i][buy][cap] = max(-prices[i] + dp[i + 1][0][cap], 
-                                              dp[i + 1][1][cap])  # buy or skip
+                        # Choose to buy or skip
+                        dp[i][buy][cap] = max(
+                            -prices[i] + dp[i + 1][0][cap],  # Buy now
+                            dp[i + 1][1][cap]                 # Skip buying
+                        )
                     else:
-                        dp[i][buy][cap] = max(prices[i] + dp[i + 1][1][cap - 1], 
-                                              dp[i + 1][0][cap])  # sell or skip
+                        # Choose to sell or skip
+                        dp[i][buy][cap] = max(
+                            prices[i] + dp[i + 1][1][cap - 1],  # Sell now
+                            dp[i + 1][0][cap]                   # Skip selling
+                        )
 
-        return dp[0][1][2]  # start at day 0, can buy, 2 transactions left
+        return dp[0][1][2]  # start at day 0, allowed to buy, 2 transactions left
+
 
 '''
         n = len(prices)
