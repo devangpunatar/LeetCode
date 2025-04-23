@@ -1,5 +1,8 @@
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        if len(edges) != n - 1:
+            return False
+        
         graph = defaultdict(list)
 
         for u, v in edges:
@@ -18,7 +21,8 @@ class Solution:
                     continue
                 if not dfs(nei, node):
                     return False
-
             return True
 
         return dfs(0, -1) and n == len(visited)
+        
+             
