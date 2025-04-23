@@ -4,15 +4,14 @@ class Solution:
         directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
         visited = set()
         minHeap = [[grid[0][0], 0, 0]] # [elevation, r, c]
-        res = 0
         while minHeap:
             elevation, r, c = heapq.heappop(minHeap)
-            res = max(res, elevation)
             if (r, c) in visited:
                 continue
+                
             visited.add((r, c))
             if (r, c) == (rows - 1, cols - 1):
-                return res
+                return elevation
 
             for dr, dc in directions:
                 newR, newC = r + dr, c + dc
