@@ -9,7 +9,7 @@ class Solution:
 
         if not root:
             return []
-            
+
         res = []
         q = collections.deque([root])
 
@@ -17,13 +17,11 @@ class Solution:
             level = []
             for _ in range(len(q)):
                 node = q.popleft()
-                if node:
-                    if node.left:
-                        q.append(node.left)
-                    if node.right:
-                        q.append(node.right)
-                    level.append(node.val)
-            if level:
-                res.append(level)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+                level.append(node.val)
+            res.append(level)
 
         return res
