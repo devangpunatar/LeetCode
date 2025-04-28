@@ -23,8 +23,7 @@ class Solution:
                     q.append(node.right)
                 level.append(node.val)
             if len(res) % 2 == 1:
-                res.append(list(reversed(level)))
-            else:
-                res.append(level)
+                level.reverse()
+            res.append(level)
 
         return res
