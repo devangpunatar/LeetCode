@@ -4,13 +4,13 @@ class Solution:
         visited = set()
         rows, cols = len(grid), len(grid[0])
         islands = 0
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         def bfs(r, c):
             q = collections.deque()
             q.append((r, c))
             visited.add((r, c))
             while q:
                 row, col = q.popleft()
-                directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
                 for dr, dc in directions:
                     newR, newC = row + dr, col + dc
                     if (newR in range(rows) and newC in range(cols) and
