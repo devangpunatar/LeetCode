@@ -12,11 +12,11 @@ class Solution:
             while q:
                 row, col = q.popleft()
                 for dr, dc in directions:
-                    newR, newC = row + dr, col + dc
-                    if (newR in range(rows) and newC in range(cols) and
-                        (newR, newC) not in visited and grid[newR][newC] == '1'):
-                        q.append((newR, newC))
-                        visited.add((newR, newC))
+                    r, c = row + dr, col + dc
+                    if (r in range(rows) and c in range(cols) and
+                        (r, c) not in visited and grid[r][c] == '1'):
+                        q.append((r, c))
+                        visited.add((r, c))
             
         for r in range(rows):
             for c in range(cols):
