@@ -10,6 +10,7 @@ class Solution:
             while j < i:
                 if dp[j] and s[j:i] in wordSet:
                     dp[i] = True
+                    break
                 j += 1
 
         return dp[n]
