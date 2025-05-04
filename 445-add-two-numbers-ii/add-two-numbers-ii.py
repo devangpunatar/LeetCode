@@ -16,9 +16,6 @@ class Solution:
             l2 = l2.next
         
         total = str(sum1 + sum2)
-        if total == "0":
-            head = ListNode(0)
-            return head
 
         head, curr = None, None
         for char in total:
