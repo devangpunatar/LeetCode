@@ -1,25 +1,22 @@
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        adj = {i: [] for i in range(n)}
+        parent = [i for i in range(n)]
+        components = n
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
 
+        def union(x, y):
+            rootX = find(x)
+            rootY = find(y)
+            if rootX == rootY:
+                return False
+            parent[rootX] = rootY
+            return True
+        
         for u, v in edges:
-            adj[u].append(v)
-            adj[v].append(u)
-            
-        visited = set()
-        res = 0
-        def dfs(node):
-            if node in visited:
-                return
-            visited.add(node)
-
-            for nei in adj[node]:
-                if nei not in visited:
-                    dfs(nei)
-            return
-
-        for node in range(n):
-            if node not in visited:
-                dfs(node)
-                res += 1 
-        return res
+            if union(u, v):
+                components -= 1
+    
+        return components
