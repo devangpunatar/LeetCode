@@ -1,10 +1,10 @@
 class Solution:
     def numRookCaptures(self, board: List[List[str]]) -> int:
 
-        for i in range(8):
-            for j in range(8):
-                if board[i][j] == 'R':
-                    rookRow, rookCol = i, j
+        for r in range(8):
+            for c in range(8):
+                if board[r][c] == 'R':
+                    rookRow, rookCol = r, c
                     break
         
         directions = [(-1, 0), (1, 0), (0, 1), (0, -1)] 
