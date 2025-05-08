@@ -6,8 +6,8 @@ class Solution:
         nei = collections.defaultdict(list)
         wordList.append(beginWord)
         for word in wordList:
-            for j in range(len(word)):
-                pattern = word[:j] + '*' + word[j + 1:]
+            for i in range(len(word)):
+                pattern = word[:i] + '*' + word[i + 1:]
                 nei[pattern].append(word)
 
         visited = set([beginWord])
@@ -19,8 +19,8 @@ class Solution:
                 word = q.popleft()
                 if word == endWord:
                     return res
-                for j in range(len(word)):
-                    pattern = word[:j] + '*' + word[j + 1:]
+                for i in range(len(word)):
+                    pattern = word[:i] + '*' + word[i + 1:]
                     for neiWord in nei[pattern]:
                         if neiWord not in visited:
                             visited.add(neiWord)
