@@ -1,14 +1,24 @@
+from collections import defaultdict
+import heapq
+
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
         graph = defaultdict(list)
-        for src, dst in sorted(tickets, reverse = True):
-            graph[src].append(dst)
 
-        stack = ["JFK"]
-        itinerary = []
+        # Step 1: Build min-heap for each airport's destinations
+        for src, dest in tickets:
+            heapq.heappush(graph[src], dest)
 
-        while stack:
-            while graph[stack[-1]]:
-                stack.append(graph[stack[-1]].pop())
-            itinerary.append(stack.pop())
-        return itinerary[::-1]
+        result = []
+
+        # Step 2: DFS function
+        def dfs(airport):
+            # Visit all destinations in lexical order
+            while graph[airport]:
+                next_dest = heapq.heappop(graph[airport])
+                dfs(next_dest)
+            result.append(airport)
+
+        # Step 3: Start DFS from JFK
+        dfs("JFK")
+        return result[::-1]  # reverse to get correct order
