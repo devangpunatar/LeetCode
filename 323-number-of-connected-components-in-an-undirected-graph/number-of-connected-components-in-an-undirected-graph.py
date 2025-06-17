@@ -12,7 +12,7 @@ class Solution:
             rootY = find(y)
             if rootX == rootY:
                 return False
-            parent[rootX] = rootY
+            parent[rootY] = rootX
             return True
         
         for u, v in edges:
